@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Header } from "./header/header";
-import { Carousel } from "./carousel/carousel";
+import { Banner } from "./banner/banner";
+import { Services } from "./services/services";
 import { Contact } from "./contact/contact";
 import { Footer } from "./footer/footer";
 
@@ -8,7 +9,7 @@ import { Footer } from "./footer/footer";
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  imports: [Header, Carousel, Contact, Footer]
+  imports: [Header, Banner, Services, Contact, Footer]
 })
 export class App {
   //
