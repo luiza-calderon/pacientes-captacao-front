@@ -6,4 +6,4 @@ $white: #fef7f8;
 $dark: $black;
 $light: $white;
 
-@use "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap/scss/bootstrap";
