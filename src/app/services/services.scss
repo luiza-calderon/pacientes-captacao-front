@@ -1,9 +1,91 @@
-.card {
-    min-height: 420px;
+@import '../../styles.scss';
+
+.carousel {
+    max-width: 1440px;
+    width: 100%;
+
+    .carousel-inner {
+        width: 100%;
+
+        .carousel-item {
+            width: 100%;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
 }
 
-@media (min-width: 1200px) {
-    .card {
-        min-height: 0;
+.carousel-actions {
+    display: flex;
+    justify-content: space-between;
+
+    .carousel-indicators {
+        position: relative;
+        align-items: center;
+        gap: 12px;
+        margin: 0;
+        padding-inline: 12px;
+
+        button {
+            padding: 8px;
+            margin: 0;
+            width: fit-content;
+            height: fit-content;
+            border-radius: 100%;
+            background-color: $light-gray-30;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            span {
+                display: block;
+                width: 10px;
+                height: 10px;
+                border-radius: 100%;
+                border: solid;
+                border-color: $gray;
+            }
+        }
+
+        button.active {
+            span {
+                background-color: $gray;
+            }
+        }
+    }
+
+    .carousel-controls {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        gap: 12px;
+        padding-inline: 12px;
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            position: relative;
+            background-color: $light-gray-30;
+            padding: 8px;
+            width: fit-content;
+            height: fit-content;
+            border-radius: 100%;
+
+            .carousel-control-prev-icon,
+            .carousel-control-next-icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 20px;
+                height: 20px;
+                color: $gray;
+                background: none;
+
+                svg {
+                    stroke-width: 4;
+                }
+            }
+        }
     }
 }
