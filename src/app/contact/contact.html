@@ -1,38 +1,51 @@
-<form>
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
   <legend>
     <h2>Envie uma <br>mensagem,</h2>
     <p class="fs-6">entrarei em contato para agendar o seu atendimento</p>
   </legend>
 
   <div class="form-floating mb-3">
-    <input type="text" id="fullName" class="form-control rounded-4" placeholder="João Pedro da Silva" maxlength="150"
-      minlength="2" required />
+    <input type="text" id="fullName" formControlName="fullName" class="form-control rounded-4"
+      placeholder="João Pedro da Silva" required maxlength="50" />
     <label for="fullName">Nome completo</label>
+    @if (fullName?.invalid && (fullName?.touched || fullName?.dirty)) {
+    <p class="feedback-invalid text-danger">Campo obrigatório (2-50 carácteres)</p>
+    }
   </div>
 
   <div class="row mb-3">
     <div class="col-4">
       <div class="form-floating">
-        <input type="text" id="ddd" class="form-control rounded-4" placeholder="014" maxlength="3" minlength="2"
-          required />
+        <input type="text" id="ddd" formControlName="ddd" class="form-control rounded-4" placeholder="014" required
+          maxlength="3" />
         <label for="ddd">DDD</label>
+        @if (ddd?.invalid && (ddd?.touched || ddd?.dirty)) {
+        <p class="feedback-invalid text-danger">Campo obrigatório (2-3 dígitos)</p>
+        }
       </div>
     </div>
     <div class="col-8">
       <div class="form-floating">
-        <input type="text" id="phone" class="form-control rounded-4" placeholder="981781772" maxlength="9" minlength="8"
+        <input type="text" id="phone" formControlName="number" class="form-control rounded-4" placeholder="981781772"
           required />
         <label for="phone">Número</label>
+        @if (number?.invalid && (number?.touched || number?.dirty)) {
+        <p class="feedback-invalid text-danger">Campo obrigatório (8-9 dígitos)</p>
+        }
       </div>
     </div>
   </div>
 
   <div class="form-floating mb-3">
-    <textarea id="message" class="form-control rounded-4" placeholder="Sua mensagem..." maxlength="250"></textarea>
+    <textarea id="message" formControlName="message" class="form-control rounded-4" placeholder="Sua mensagem..."
+      required></textarea>
+    @if (message?.invalid && (message?.touched || message?.dirty)) {
+    <p class="feedback-invalid text-danger">Campo obrigatório (2-250 carácteres)</p>
+    }
     <label for="message">Mensagem</label>
   </div>
 
-  <div class="accordion accordion mb-3" id="accordionOptionalInformation">
+  <!-- <div class="accordion accordion mb-3" id="accordionOptionalInformation" hidden>
     <div class="accordion-item rounded-4">
       <h2 class="accordion-header" id="flush-headingOne">
         <button class="accordion-button collapsed rounded-4 py-4" type="button" data-bs-toggle="collapse"
@@ -69,17 +82,21 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="mt-2">
-    <input type="checkbox" id="legal" class="form-check-input me-3 col-2" required />
+    <input type="checkbox" id="legal" formControlName="legal" class="form-check-input me-3 col-2" required />
     <label for="legal" class="form-label fs-6 text-wrap col-10">Li e Aceito os
       <a href="#" data-bs-toggle="modal" data-bs-target="#modalLegal">
-        Termos de Uso e Privacidade</a>.</label>
+        Termos de Uso e Políticas de Privacidade</a>.</label>
   </div>
+  @if (legal?.invalid && (legal?.touched || legal?.dirty)) {
+  <p class="feedback-invalid text-danger">Você precisa aceitar os termos.</p>
+  }
 
   <div class="mt-4">
-    <button type="submit" class="btn btn-primary col-12 py-3 rounded-4 text-light">Enviar</button>
+    <button type="submit" class="btn btn-primary col-12 py-3 rounded-4 text-light"
+      [disabled]="!contactForm.valid">Enviar</button>
   </div>
 
   <div id="modalLegal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -106,7 +123,8 @@
               </p>
               <li>Objetivo do Site</li>
               <p>
-                Este site tem como finalidade divulgar informações sobre serviços fonoaudiológicos e oferecer um canal de
+                Este site tem como finalidade divulgar informações sobre serviços fonoaudiológicos e oferecer um canal
+                de
                 contato com o profissional responsável.
               </p>
               <li>Uso do Formulário de Contato</li>
@@ -128,7 +146,8 @@
               </p>
               <li>Modificações</li>
               <p>
-                Estes Termos de Uso podem ser alterados a qualquer momento, sendo responsabilidade do usuário consultá-los
+                Estes Termos de Uso podem ser alterados a qualquer momento, sendo responsabilidade do usuário
+                consultá-los
                 periodicamente.
               </p>
             </ol>
@@ -138,7 +157,8 @@
               <li>Coleta de Informações</li>
               <ul>
                 <p>
-                  Coletamos dados pessoais fornecidos voluntariamente pelo usuário por meio do formulário de contato, como:
+                  Coletamos dados pessoais fornecidos voluntariamente pelo usuário por meio do formulário de contato,
+                  como:
                 </p>
                 <li>Nome</li>
                 <li>Telefone (DDD + Número)</li>
@@ -158,12 +178,14 @@
               </ul>
               <li>Compartilhamento de Dados</li>
               <p>
-                Não compartilhamos, vendemos ou alugamos os dados pessoais dos usuários com terceiros, exceto se exigido por
+                Não compartilhamos, vendemos ou alugamos os dados pessoais dos usuários com terceiros, exceto se exigido
+                por
                 lei.
               </p>
               <li>Armazenamento e Segurança</li>
               <p>
-                Os dados são armazenados com medidas de segurança apropriadas para garantir a confidencialidade e integridade
+                Os dados são armazenados com medidas de segurança apropriadas para garantir a confidencialidade e
+                integridade
                 das informações.
               </p>
               <li>Direitos do Usuário</li>
@@ -178,7 +200,8 @@
               <p>Basta enviar um e-mail para luizacalderon.fono&#64;gmail.com com a solicitação.</p>
               <li>Cookies</li>
               <p>
-                Este site pode utilizar cookies para melhorar a navegação. O usuário pode configurar seu navegador para não
+                Este site pode utilizar cookies para melhorar a navegação. O usuário pode configurar seu navegador para
+                não
                 aceitar cookies, se preferir.
               </p>
               <li>Alterações na Política</li>
