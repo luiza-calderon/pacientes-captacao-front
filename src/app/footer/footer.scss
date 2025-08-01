@@ -1,0 +1,32 @@
+@import "../../styles.scss";
+
+.btn {
+    width: 48px;
+    height: 48px;
+    background-color: $light-gray-30;
+}
+
+.btn:hover {
+    background-color: $light-gray-30;
+    opacity: 0.7;
+}
+
+.btn:active, .btn:first-child:active {
+    background-color: $light-gray-30;
+}
+
+.btn-label {
+    font-size: 0.75rem;
+    padding-top: 4px;
+}
+
+h6, p {
+    font-size: 0.8rem;
+}
+
+svg {
+    width: 24px;
+    height: 24px;
+    color: $gray;
+    stroke-width: 2;
+}

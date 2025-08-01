@@ -1,0 +1,243 @@
+<div>
+  @if (success) {
+  <div class="text-center my-5">
+    <div class="container px-5 mb-2">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+        class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </svg>
+    </div>
+    <p class="fs-4">Obrigado <span class="fw-bold">{{ submittedFullName | fullName}}</span> pelo envio das suas
+      informações!</p>
+    <p>Entrarei em contato com você no número <span class="fw-bold">{{ submittedPhone | phone }}</span> para agendar seu
+      atendimento.</p>
+    <hr class="my-5">
+    <button class="btn link-primary" (click)="newMessage()">Clique aqui para enviar uma nova mensagem</button>
+  </div>
+  } @else {
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <legend>
+      <h2>Envie uma <br>mensagem,</h2>
+      <p class="fs-6">entrarei em contato para agendar o seu atendimento</p>
+    </legend>
+
+    <div class="form-floating mb-3">
+      <input type="text" id="fullName" formControlName="fullName" class="form-control rounded-4"
+        placeholder="João Pedro da Silva" required maxlength="50" (input)="trimStartTextInput($event)" />
+      <label for="fullName">Nome completo</label>
+      @if (fullName?.invalid && (fullName?.touched || fullName?.dirty || submitted)) {
+      <p class="feedback-invalid text-danger">Campo obrigatório (2-50 carácteres)</p>
+      }
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-4">
+        <div class="form-floating">
+          <input type="text" inputmode="numeric" pattern="\d*" id="ddd" formControlName="ddd"
+            class="form-control rounded-4" placeholder="014" required maxlength="3"
+            (input)="onlyNumbersFromTextInput($event)" />
+          <label for="ddd">DDD</label>
+          @if (ddd?.invalid && (ddd?.touched || ddd?.dirty || submitted)) {
+          <p class="feedback-invalid text-danger">Campo obrigatório (2-3 dígitos)</p>
+          }
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="form-floating">
+          <input type="text" inputmode="numeric" pattern="\d*" id="phone" formControlName="number"
+            class="form-control rounded-4" placeholder="981781772" required maxlength="9"
+            (input)="onlyNumbersFromTextInput($event)" />
+          <label for="phone">Número</label>
+          @if (number?.invalid && (number?.touched || number?.dirty || submitted)) {
+          <p class="feedback-invalid text-danger">Campo obrigatório (8-9 dígitos)</p>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <textarea id="message" formControlName="message" class="form-control rounded-4" placeholder="Sua mensagem..."
+        required (input)="trimStartTextInput($event)"></textarea>
+      @if (message?.invalid && (message?.touched || message?.dirty || submitted)) {
+      <p class="feedback-invalid text-danger">Campo obrigatório (2-250 carácteres)</p>
+      }
+      <label for="message">Mensagem</label>
+    </div>
+
+    <!-- <div class="accordion accordion mb-3" id="accordionOptionalInformation" hidden>
+      <div class="accordion-item rounded-4">
+        <h2 class="accordion-header" id="flush-headingOne">
+          <button class="accordion-button collapsed rounded-4 py-4" type="button" data-bs-toggle="collapse"
+            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            Informações opcionais
+          </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+          data-bs-parent="#accordionOptionalInformation">
+          <div class="accordion-body d-flex flex-column gap-4">
+            <div class="col-12">
+              <div class="form-floating">
+                <select id="serviceArea" class="form-select">
+                  <option></option>
+                  <option value="1">Estimulação Precoce</option>
+                  <option value="2">Atendimento Infantil</option>
+                  <option value="3">Atendimento para Adultos</option>
+                  <option value="4">Atendimento para Idosos</option>
+                </select>
+                <label for="serviceArea">Área de Atendimento</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-floating">
+                <select id="state" class="form-select">
+                  <option></option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+                <label for="state">Estado</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="mt-2">
+      <input type="checkbox" id="legal" formControlName="legal" class="form-check-input me-3 col-2" required />
+      <label for="legal" class="form-label fs-6 text-wrap col-10">Li e Aceito os
+        <a href="#" data-bs-toggle="modal" data-bs-target="#modalLegal">
+          Termos de Uso e Políticas de Privacidade</a>.</label>
+    </div>
+    @if (legal?.invalid && (legal?.touched || legal?.dirty || submitted)) {
+    <p class="feedback-invalid text-danger">Você precisa aceitar os termos.</p>
+    }
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary col-12 py-3 rounded-4 text-light"
+        [disabled]="!contactForm.valid">Enviar</button>
+    </div>
+
+    <div id="modalLegal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="modalLegalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="container">
+              <h1 class="modal-title fs-5" id="modalLegalLabel">
+                Termos de Uso e Política de Privacidade
+              </h1>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <h3>Termos de Uso</h3>
+              <ol>
+                <li>Aceitação dos Termos</li>
+                <p>
+                  Ao acessar este site, o usuário concorda com os presentes Termos de Uso e compromete-se a utilizá-lo
+                  de
+                  acordo
+                  com a legislação vigente e com os princípios éticos e de respeito ao próximo.
+                </p>
+                <li>Objetivo do Site</li>
+                <p>
+                  Este site tem como finalidade divulgar informações sobre serviços fonoaudiológicos e oferecer um canal
+                  de
+                  contato com o profissional responsável.
+                </p>
+                <li>Uso do Formulário de Contato</li>
+                <p>
+                  O usuário pode utilizar o formulário de contato para solicitar informações, tirar dúvidas ou agendar
+                  atendimentos. Ao utilizar o formulário, o usuário compromete-se a fornecer informações verídicas e
+                  atualizadas.
+                </p>
+                <li>Propriedade Intelectual</li>
+                <p>
+                  Todo o conteúdo deste site (textos, imagens, logos, etc.) é de propriedade da responsável pelo site ou
+                  possui
+                  autorização para uso, sendo proibida sua reprodução sem autorização prévia.
+                </p>
+                <li>Responsabilidade</li>
+                <p>
+                  O site tem caráter informativo e não substitui uma avaliação ou atendimento profissional. O uso das
+                  informações é de responsabilidade do usuário.
+                </p>
+                <li>Modificações</li>
+                <p>
+                  Estes Termos de Uso podem ser alterados a qualquer momento, sendo responsabilidade do usuário
+                  consultá-los
+                  periodicamente.
+                </p>
+              </ol>
+              <hr>
+              <h3>Política de Privacidade</h3>
+              <ol>
+                <li>Coleta de Informações</li>
+                <ul>
+                  <p>
+                    Coletamos dados pessoais fornecidos voluntariamente pelo usuário por meio do formulário de contato,
+                    como:
+                  </p>
+                  <li>Nome</li>
+                  <li>Telefone (DDD + Número)</li>
+                  <li>Mensagem</li>
+                </ul>
+                <li>Finalidade da Coleta</li>
+                <ul>
+                  <p>
+                    As informações coletadas serão utilizadas exclusivamente para:
+                  </p>
+                  <li>
+                    Retornar o contato do usuário</li>
+                  <li>
+                    Esclarecer dúvidas</li>
+                  <li>
+                    Agendar atendimentos ou enviar informações relevantes</li>
+                </ul>
+                <li>Compartilhamento de Dados</li>
+                <p>
+                  Não compartilhamos, vendemos ou alugamos os dados pessoais dos usuários com terceiros, exceto se
+                  exigido
+                  por
+                  lei.
+                </p>
+                <li>Armazenamento e Segurança</li>
+                <p>
+                  Os dados são armazenados com medidas de segurança apropriadas para garantir a confidencialidade e
+                  integridade
+                  das informações.
+                </p>
+                <li>Direitos do Usuário</li>
+                <ul>
+                  <p>
+                    O usuário pode, a qualquer momento, solicitar:
+                  </p>
+                  <li>Acesso aos seus dados</li>
+                  <li>Correção de informações</li>
+                  <li>Exclusão de seus dados pessoais</li>
+                </ul>
+                <p>Basta enviar um e-mail para luizacalderon.fono&#64;gmail.com com a solicitação.</p>
+                <li>Cookies</li>
+                <p>
+                  Este site pode utilizar cookies para melhorar a navegação. O usuário pode configurar seu navegador
+                  para
+                  não
+                  aceitar cookies, se preferir.
+                </p>
+                <li>Alterações na Política</li>
+                <p>
+                  Esta política pode ser atualizada periodicamente. Recomendamos a consulta regular para estar ciente de
+                  eventuais mudanças.
+                </p>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  }
+</div>

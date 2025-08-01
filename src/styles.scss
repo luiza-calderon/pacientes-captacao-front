@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+$font-family-base: 'Poppins', sans-serif;
+
+$black: #211D24;
+$white: #FEF7F8;
+$gray: #7A767B;
+$light-gray: #9A919D;
+$light-gray-30: #9a919d2a;
+$primary: #5493F8;
+
+$dark: $black;
+$light: $white;
+
+@import "../node_modules/bootstrap/scss/bootstrap";

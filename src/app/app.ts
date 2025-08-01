@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Header } from "./header/header";
+import { Services } from "./services/services";
+import { Contact } from "./contact/contact";
+import { Footer } from "./footer/footer";
+import { About } from "./about/about";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
+  imports: [Header, Services, Contact, Footer, About]
 })
 export class App {
-  protected title = 'luiza-calderon';
+  //
 }
